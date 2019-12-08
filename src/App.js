@@ -1,13 +1,27 @@
-import React, {Component} from 'react';
+import React, {Component, Fragments} from 'react';
 
+// const Items  = ({menu}) => {
 class Items extends Component{
+  state = {
+    counter: 0,
+  }
+  handleClick = () => {
+    this.setState({
+      counter: this.state.counter + 1,
+    });
+  }
+  handleRemove = () => {
+    this.setState({
+      counter: this.state.counter - 1, 
+    });
+  }
   render(){
     const { menu } = this.props;
     const menuList = menu.map(
       item => {
         return(
           <div className="menu-list" key={item.id}>
-          <h2>  {item.name} {item.price} - <span>{item.desc} <button>Add </button></span> </h2>
+          <h2>  {item.name} {item.price} - <span>{item.desc} <button onClick={this.handleClick}>Add </button></span> </h2>
 
           </div> 
         )
@@ -16,10 +30,18 @@ class Items extends Component{
     return(
       <div className="eMenu">
       {menuList}
+      <h1>
+        You have
+        &nbsp; {this.state.counter} &nbsp;
+        Items in your cart
+        <br />
+      </h1>
+      <button onClick={this.handleRemove}>Remove</button>
       </div>
     )
   }
 }
+
 class App extends Component{
   state = {
     menu: [
